@@ -7,13 +7,27 @@ const Manager = require('./lib/Manager')
 const Engineer = require('./lib/Engineer')
 const Intern = require('./lib/Intern')
 
-const dom = new JSDOM(`<!DOCTYPE html><p>Hello world</p>`);
-var p = dom.window.document.querySelector("p")
-var h1 = dom.window.document.createElement("h1")
-h1.textContent = "Testing Testing"
-p.appendChild(h1)
+const dom = new JSDOM(`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <title>Document</title>
+</head>
+<body>
+    <p>Hello World</p>
+    <script src="../script.js"></script>
+</body>
+</html>`);
+   
+// var p = dom.window.document.querySelector("p")
+// var h1 = dom.window.document.createElement("h1")
+// h1.textContent = "Testing Testing"
+// p.appendChild(h1)
 
-console.log(dom.window.document.querySelector("p").textContent); // "Hello world"
+// console.log(dom.window.document.querySelector("p").textContent); // "Hello world"
 
 
 const questions = [
@@ -102,9 +116,20 @@ function init() {
     inquirer.prompt(questions) . then( (answers) => 
     
     { function getAnswers(){
-        var manName = document.createElement('h1')
-        manName.textContent = answers['manager-name']
-        body.appendChild(manName)
+        var div = dom.window.document.createElement("div")
+        var body = dom.window.document.querySelector("body")
+        // var h1 = dom.window.document.createElement("h1")
+        div.innerHTML = `lkajsdfldsjkf`
+        // const card = (answers) => `${answers.manager-name}`
+        body.appendChild(div)
+        var domString = dom.window.document.documentElement.outerHTML
+        // console.log(dom.textContent)
+        // console.log(dom.window.document.querySelector("body").textContent); // "Hello world"
+        fs.writeFile('index1.html', domString, (err) =>
+            err ? console.log(err) : console.log('Successfully created index.html!')
+          );
+
+
        
         inquirer.prompt(questions2).then((answers2) => {
            
@@ -129,7 +154,9 @@ function init() {
                 
                 getAnswers())}
 
-            else fs.writeFile()
+            else fs.writeFile('index.html', dom.window.document.toString(), (err) =>
+            err ? console.log(err) : console.log('Successfully created index.html!')
+          );
         })
     }
     getAnswers()
