@@ -4,7 +4,6 @@ const Manager = require('./lib/Manager')
 const Engineer = require('./lib/Engineer')
 const Intern = require('./lib/Intern')
 
-var manager = new Manager()
 // var engineer = new Engineer()
 // var intern = new Intern()
 
@@ -82,10 +81,14 @@ function init() {
     
     { function getAnswers(){
         inquirer.prompt(questions2).then((response) => { 
-            if(response.list === "engineer") { inquirer.prompt(questions3).then((answers2) => 
-                
-                
-                getAnswers())}
+            if(response.list === "engineer") { inquirer.prompt(questions3).then(
+                (answers2) =>  {manager = new Manager(answers2);
+                               manager.getName(answers.test);
+                               console.log()}).then(
+
+                (answers2) => getAnswers())
+            }
+
             else if(response.list === "intern") {inquirer.prompt(questions4).then((answers3) => 
                 
                 
