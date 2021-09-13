@@ -1,8 +1,20 @@
+
+const jsdom = require("jsdom");
+const { JSDOM } = jsdom;
 const fs = require('fs')
 const inquirer = require('inquirer')
 const Manager = require('./lib/Manager')
 const Engineer = require('./lib/Engineer')
 const Intern = require('./lib/Intern')
+
+const dom = new JSDOM(`<!DOCTYPE html><p>Hello world</p>`);
+var p = dom.window.document.querySelector("p")
+var h1 = dom.window.document.createElement("h1")
+h1.textContent = "Testing Testing"
+p.appendChild(h1)
+
+console.log(dom.window.document.querySelector("p").textContent); // "Hello world"
+
 
 const questions = [
     {
@@ -16,6 +28,7 @@ const questions = [
     name: 'phone-number'  
 }
 // {
+
 //     type: 'list',
 //     name: 'list',
 //     message: "Please select an employee to ad, or finish",
@@ -88,8 +101,10 @@ const questions4 = [
 function init() {
     inquirer.prompt(questions) . then( (answers) => 
     
-    { function getAnswers(){ 
-       
+    { function getAnswers(){
+        var manName = document.createElement('h1')
+        manName.textContent = answers['manager-name']
+        body.appendChild(manName)
        
         inquirer.prompt(questions2).then((answers2) => {
            
@@ -113,6 +128,8 @@ function init() {
                 
                 
                 getAnswers())}
+
+            else fs.writeFile()
         })
     }
     getAnswers()
