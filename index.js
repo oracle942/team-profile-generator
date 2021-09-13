@@ -4,12 +4,6 @@ const Manager = require('./lib/Manager')
 const Engineer = require('./lib/Engineer')
 const Intern = require('./lib/Intern')
 
-// var engineer = new Engineer()
-// var intern = new Intern()
-
-// console.log(manager.getName())
-// const classes = require(/lib/classes)
-
 const questions = [
     {
     type: 'input',
@@ -60,8 +54,23 @@ const questions2 = [
 const questions3 = [
     {
         type: 'input',
-        name: 'test',
-        message: 'this is an engineer test'
+        name: 'name',
+        message: "What is the engineer's name?"
+    },
+    {
+        type: 'input',
+        name: 'id',
+        message: "What is the engineer's id?"
+    },
+    {
+        type: 'input',
+        name: 'email',
+        message: "What is the engineer's email?"
+    },
+    {
+        type: 'input',
+        name: 'github',
+        message: "What is the engineer's GitHub?"
     }
 ]
 const questions4 = [
@@ -79,17 +88,26 @@ const questions4 = [
 function init() {
     inquirer.prompt(questions) . then( (answers) => 
     
-    { function getAnswers(){
-        inquirer.prompt(questions2).then((response) => { 
-            if(response.list === "engineer") { inquirer.prompt(questions3).then(
-                (answers2) =>  {manager = new Manager(answers2);
-                               manager.getName(answers.test);
-                               console.log()}).then(
+    { function getAnswers(){ 
+       console.log(answers['manager-name']) 
+       
+        inquirer.prompt(questions2).then((answers2) => {
+           
+           
+
+
+            if(answers2.list === "engineer") { inquirer.prompt(questions3).then(
+                (answers3) =>  {manager = new Manager(answers3);
+                               manager.getName(answers3.name);
+                               manager.getId(answers3.id);
+                               manager.getEmail(answers3.email);
+                               manager.getRole("Engineer");
+                               console.log(manager.email)}).then(
 
                 (answers2) => getAnswers())
             }
 
-            else if(response.list === "intern") {inquirer.prompt(questions4).then((answers3) => 
+            else if(answers2.list === "intern") {inquirer.prompt(questions4).then((answers4) => 
                 
                 
                 
