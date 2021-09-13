@@ -4,7 +4,11 @@ const Manager = require('./lib/Manager')
 const Engineer = require('./lib/Engineer')
 const Intern = require('./lib/Intern')
 
+var manager = new Manager()
+// var engineer = new Engineer()
+// var intern = new Intern()
 
+// console.log(manager.getName())
 // const classes = require(/lib/classes)
 
 const questions = [
