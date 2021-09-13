@@ -89,7 +89,7 @@ function init() {
     inquirer.prompt(questions) . then( (answers) => 
     
     { function getAnswers(){ 
-       console.log(answers['manager-name']) 
+       
        
         inquirer.prompt(questions2).then((answers2) => {
            
