@@ -1,4 +1,3 @@
-
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 const fs = require('fs')
@@ -17,16 +16,13 @@ const dom = new JSDOM(`<!DOCTYPE html>
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
     <title>Team Profile Generator</title>
-
 </head>
 <body>
-
     <div class="container ">
         <header class="d-flex justify-content-center py-3">
           <h1>TEAM PROFILE GENERATOR</h1>
         </header>
     </div>
-
     <div class = "content container d-flex flex-wrap"></div>
       
     
@@ -36,13 +32,6 @@ const dom = new JSDOM(`<!DOCTYPE html>
 </body>
 </html>`);
    
-// var p = dom.window.document.querySelector("p")
-// var h1 = dom.window.document.createElement("h1")
-// h1.textContent = "Testing Testing"
-// p.appendChild(h1)
-
-// console.log(dom.window.document.querySelector("p").textContent); // "Hello world"
-
 
 const questions = [
     {
@@ -75,7 +64,6 @@ const questions2 = [
         name: 'list',
         message: "Please select an employee to ad, or finish",
         choices: ["engineer", "intern", "finish"],
-        // choices => if(choices === "finish") break
         
         }
 ]
@@ -125,7 +113,6 @@ function init() {
             <div class="card-body">
             <h5 class="card-title">${answers.managerName}</h5>
             <p class="card-text">Manager</p>
-
             </div>
             <ul class="list-group list-group-flush">
             <li class="list-group-item">Phone number: ${answers.phoneNumber}</li>
@@ -191,8 +178,3 @@ function init() {
                                      
 
 init();
-
-
-
-
-
