@@ -21,13 +21,13 @@ const dom = new JSDOM(`<!DOCTYPE html>
 </head>
 <body>
 
-    <div class="container">
+    <div class="container ">
         <header class="d-flex justify-content-center py-3">
           <h1>TEAM PROFILE GENERATOR</h1>
         </header>
     </div>
 
-    <div class = "content"></div>
+    <div class = "content container d-flex flex-wrap"></div>
       
     
     <script src="../script.js">
@@ -120,7 +120,7 @@ function init() {
     { function getAnswers(){
         var div = dom.window.document.createElement("div")
         var content = dom.window.document.querySelector(".content")
-        div.innerHTML = `<div class="container d-flex flex-wrap">
+        div.innerHTML = `<div>
         <div class="card" style="width: 18rem;">
             <div class="card-body">
             <h5 class="card-title">${answers.managerName}</h5>
@@ -145,13 +145,10 @@ function init() {
 
 
             if(answers2.list === "engineer") { inquirer.prompt(questions3).then(
-                (answers3) =>  {engineer = new Engineer(answers3);
-                               name = engineer.getName(answers3.name);
-                               id = engineer.getId(answers3.id);
-                               email = engineer.getEmail(answers3.email);
-                               role = engineer.getRole("Engineer");
-                               github = engineer.getGitHub(answers3.github)
-                               div.innerHTML = `<div class="container d-flex flex-wrap">
+                (answers3) =>  {
+                                var div2 = dom.window.document.createElement("div")
+                                var content = dom.window.document.querySelector(".content")
+                               div2.innerHTML= `<div class="container d-flex flex-wrap innerDiv">
                                <div class="card" style="width: 18rem;">
                                    <div class="card-body">
                                    <h5 class="card-title">${answers3.name}</h5>
@@ -166,37 +163,23 @@ function init() {
                                    
                                </div>    
                            </div>`
-                           var div2 = dom.window.document.createElement("div")
-                           var domString = dom.window.document.documentElement.outerHTML;
                            content.appendChild(div2)
-                            fs.writeFile('index1.html', domString, (err) =>
-                                err ? console.log(err) : console.log('Successfully created index.html!')
-                            );
-                            
-                            
-                            
-                            }
-
-
-                               
-                               
-                               
-                               
-                               ).then(
-
-                (answers3) => getAnswers())
+                        }
+                        ).then((answers3) => getAnswers())
             }
 
-            else if(answers2.list === "intern") {inquirer.prompt(questions4).then((answers4) => 
+            else if (answers2.list === "intern") {inquirer.prompt(questions4).then((answers4) => 
                 
                 
                 
                 
                 getAnswers())}
 
-            else fs.writeFile('index.html', dom.window.document.toString(), (err) =>
-            err ? console.log(err) : console.log('Successfully created index.html!')
-          );
+                else if(answers2.list === "finish"){ 
+                var domString = dom.window.document.documentElement.outerHTML;
+                fs.writeFile('index1.html', domString, (err) =>
+                err ? console.log(err) : console.log('Successfully created index.html!')
+        );}
         })
     }
     getAnswers()
@@ -210,21 +193,6 @@ function init() {
 init();
 
 
-// function writeToFile(fileName, data) {
-//     let filler = `# ${data.license}`
 
-//     fs.writeFile(fileName, filler, (err) =>
-//     err ? console.error(err) : console.log('Success!')
-//     );
-// }
-
-
-
-    //     fs.writeFile("./dist/index.html", JSON.stringify(data), (err) =>
-    // err ? console.error(err) : console.log('Success!'))
-    
-    
-        // let fileName = `${data.name}` + ".html";
-        // writeToFile(fileName, data)
 
 
