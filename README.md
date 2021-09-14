@@ -16,6 +16,8 @@ To generate a team-profile, answer the questions that appear in the terminal. On
 Please follow the video link below for a walkthrough description 
 https://watch.screencastify.com/v/FiJy95ffHJXbcuYmRt1B
 
+![screenshot](tpg.PNG)
+
 ## License
 MIT
 
