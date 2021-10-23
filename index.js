@@ -1,10 +1,12 @@
-const jsdom = require("jsdom");
+const jsdom = require('jsdom');
 const { JSDOM } = jsdom;
-const fs = require('fs')
-const inquirer = require('inquirer')
-const Manager = require('./lib/Manager')
-const Engineer = require('./lib/Engineer')
-const Intern = require('./lib/Intern')
+const fs = require('fs');
+const inquirer = require('inquirer');
+const Manager = require('./lib/Manager');
+const Engineer = require('./lib/Engineer');
+const Intern = require('./lib/Intern');
+
+const teamMembers = [];
 
 const dom = new JSDOM(`<!DOCTYPE html>
 <html lang="en">
@@ -31,150 +33,190 @@ const dom = new JSDOM(`<!DOCTYPE html>
    
 </body>
 </html>`);
-   
 
-const questions = [
-    {
+const managerQuestions = [
+  {
     type: 'input',
     message: "Please enter the team manager's name:",
-    name: 'managerName'  
-},
-    {
+    name: 'managerName',
+  },
+  {
     type: 'input',
-    message: "Please enter the team manager's phone number:",
-    name: 'phoneNumber'  
-},
-    {
+    message: "Please enter the team manager's id:",
+    name: 'id',
+  },
+  {
     type: 'input',
     message: "Please enter the team manager's email:",
-    name: 'email'  
-},
-    {
+    name: 'email',
+  },
+  {
     type: 'input',
     message: "Please enter the team manager's office number:",
-    name: 'officeNumber'  
-},
+    name: 'officeNumber',
+  },
+];
+
+const question = [
+  {
+    type: 'list',
+    name: 'selection',
+    message: 'Please select an employee to ad, or finish',
+    choices: ['engineer', 'intern', 'finish'],
+  },
+];
+
+const engineerQuestions = [
+  {
+    type: 'input',
+    name: 'name',
+    message: "What is the engineer's name?",
+  },
+  {
+    type: 'input',
+    name: 'id',
+    message: "What is the engineer's id?",
+  },
+  {
+    type: 'input',
+    name: 'email',
+    message: "What is the engineer's email?",
+  },
+  {
+    type: 'input',
+    name: 'github',
+    message: "What is the engineer's github?",
+  },
+];
+const internQuestions = [
+  {
+    type: 'input',
+    name: 'name',
+    message: "What is the intern's name?",
+  },
+  {
+    type: 'input',
+    name: 'id',
+    message: "What is the intern's id?",
+  },
+  {
+    type: 'input',
+    name: 'email',
+    message: "What is the intern's email?",
+  },
+  {
+    type: 'input',
+    name: 'school',
+    message: "What is the intern's school?",
+  },
+];
 
 
-]
-
-const questions2 = [
-    {
-        type: 'list',
-        name: 'list',
-        message: "Please select an employee to ad, or finish",
-        choices: ["engineer", "intern", "finish"],
-        
-        }
-]
-
-const questions3 = [
-    {
-        type: 'input',
-        name: 'name',
-        message: "What is the engineer's name?"
-    },
-    {
-        type: 'input',
-        name: 'id',
-        message: "What is the engineer's id?"
-    },
-    {
-        type: 'input',
-        name: 'email',
-        message: "What is the engineer's email?"
-    },
-    {
-        type: 'input',
-        name: 'github',
-        message: "What is the engineer's GitHub?"
-    }
-]
-const questions4 = [
-    {
-        type: 'input',
-        name: 'test',
-        message: 'this is a test'
-    }
-]
-
-
-
-
-
-function init() {
-    inquirer.prompt(questions) . then( (answers) => 
-    
-    { function getAnswers(){
-        var div = dom.window.document.createElement("div")
-        var content = dom.window.document.querySelector(".content")
-        div.innerHTML = `<div>
+function createManager() {
+  inquirer.prompt(managerQuestions).then((answers) => {
+    var div = dom.window.document.createElement('div');
+    var content = dom.window.document.querySelector('.content');
+    const newManager = new Manager(
+      answers.name,
+      answers.id,
+      answers.email,
+      answers.officeNumber
+    );
+    div.innerHTML = `<div>
         <div class="card" style="width: 18rem;">
             <div class="card-body">
             <h5 class="card-title">${answers.managerName}</h5>
             <p class="card-text">Manager</p>
             </div>
             <ul class="list-group list-group-flush">
-            <li class="list-group-item">Phone number: ${answers.phoneNumber}</li>
+            <li class="list-group-item">Employee ID: ${answers.id}</li>
             <li class="list-group-item">Email: ${answers.email}</li>
             <li class="list-group-item">Office Number: ${answers.officeNumber}</li>
             </ul>
             
         </div>    
-    </div>`
-        content.appendChild(div)
-
-
-       
-        inquirer.prompt(questions2).then((answers2) => {
-           
-           
-
-
-            if(answers2.list === "engineer") { inquirer.prompt(questions3).then(
-                (answers3) =>  {
-                                var div2 = dom.window.document.createElement("div")
-                                var content = dom.window.document.querySelector(".content")
-                               div2.innerHTML= `<div class="container d-flex flex-wrap innerDiv">
-                               <div class="card" style="width: 18rem;">
-                                   <div class="card-body">
-                                   <h5 class="card-title">${answers3.name}</h5>
-                                   <p class="card-text">Engineer</p>
-                       
-                                   </div>
-                                   <ul class="list-group list-group-flush">
-                                   <li class="list-group-item">Employee ID: ${answers3.id}</li>
-                                   <li class="list-group-item">Email: ${answers3.email}</li>
-                                   <li class="list-group-item">GitHub: ${answers3.github}</li>
-                                   </ul>
-                                   
-                               </div>    
-                           </div>`
-                           content.appendChild(div2)
-                        }
-                        ).then((answers3) => getAnswers())
-            }
-
-            else if (answers2.list === "intern") {inquirer.prompt(questions4).then((answers4) => 
-                
-                
-                
-                
-                getAnswers())}
-
-                else if(answers2.list === "finish"){ 
-                var domString = dom.window.document.documentElement.outerHTML;
-                fs.writeFile('index1.html', domString, (err) =>
-                err ? console.log(err) : console.log('Successfully created index.html!')
-        );}
-        })
-    }
-    getAnswers()
+    </div>`;
+    content.appendChild(div);
+    init();
+  });
 }
-    )
-} 
-        
-                                                       
-                                     
 
-init();
+function createEngineer() {
+  inquirer.prompt(engineerQuestions).then((answers) => {
+    var div = dom.window.document.createElement('div');
+    var content = dom.window.document.querySelector('.content');
+    const newEngineer = new Engineer(
+      answers.name,
+      answers.id,
+      answers.email,
+      answers.github
+    );
+    div.innerHTML = `<div>
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+            <h5 class="card-title">${answers.name}</h5>
+            <p class="card-text">Engineer</p>
+            </div>
+            <ul class="list-group list-group-flush">
+            <li class="list-group-item">Employee ID: ${answers.id}</li>
+            <li class="list-group-item">Email: ${answers.email}</li>
+            <li class="list-group-item">github: ${answers.github}</li>
+            </ul>
+            
+        </div>    
+    </div>`;
+    content.appendChild(div);
+    init();
+  });
+}
+function createIntern() {
+  inquirer.prompt(internQuestions).then((answers) => {
+    var div = dom.window.document.createElement('div');
+    var content = dom.window.document.querySelector('.content');
+    const newManager = new Intern(
+      answers.name,
+      answers.id,
+      answers.email,
+      answers.school
+    );
+    div.innerHTML = `<div>
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+            <h5 class="card-title">${answers.name}</h5>
+            <p class="card-text">Intern</p>
+            </div>
+            <ul class="list-group list-group-flush">
+            <li class="list-group-item">Employee ID: ${answers.id}</li>
+            <li class="list-group-item">Email: ${answers.email}</li>
+            <li class="list-group-item">School: ${answers.school}</li>
+            </ul>
+            
+        </div>    
+    </div>`;
+    content.appendChild(div);
+    init();
+  });
+}
+
+function init() {
+  inquirer.prompt(question).then((answers) => {
+    switch (answers.selection) {
+      case 'engineer':
+        createEngineer();
+        break;
+      case 'intern':
+        createIntern();
+        break;
+      case 'finish':
+        var domString = dom.window.document.documentElement.outerHTML;
+        fs.writeFile('index1.html', domString, (err) =>
+          err
+            ? console.log(err)
+            : console.log('Successfully created index.html!')
+        );
+        break;
+    }
+  });
+}
+
+createManager();
